@@ -1,26 +1,71 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { GoogleApiWrapper, InfoWindow, Map, Marker } from 'google-maps-react';
+import React, { Component } from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+class App extends Component {
+  state = {
+    activeMarker: {},
+    selectedPlace: {},
+    showingInfoWindow: false,
+  };
+
+  locationDetails = {
+    lat: 23.170664,
+    lng: 89.212418,
+  };
+
+  onMarkerClick = (props, marker) =>
+    this.setState({
+      activeMarker: marker,
+      selectedPlace: props,
+      showingInfoWindow: true,
+    });
+
+  onInfoWindowClose = () =>
+    this.setState({
+      activeMarker: null,
+      showingInfoWindow: false,
+    });
+
+  onMapClicked = () => {
+    if (this.state.showingInfoWindow)
+      this.setState({
+        activeMarker: null,
+        showingInfoWindow: false,
+      });
+  };
+
+  render() {
+    if (!this.props.loaded) return <div>Loading...</div>;
+
+    return (
+      <Map
+        className="map"
+        google={this.props.google}
+        onClick={this.onMapClicked}
+        style={{ height: '100vh', position: 'relative', width: '100vw' }}
+        initialCenter={this.locationDetails}
+        center={this.locationDetails}
+        zoom={15}
+      >
+        <Marker
+          name="Jashore"
+          onClick={this.onMarkerClick}
+          position={this.locationDetails}
+        />
+
+        <InfoWindow
+          marker={this.state.activeMarker}
+          onClose={this.onInfoWindowClose}
+          visible={this.state.showingInfoWindow}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+          <div>
+            <h2>Form will render here...</h2>
+          </div>
+        </InfoWindow>
+      </Map>
+    );
+  }
 }
-
-export default App;
+export default GoogleApiWrapper({
+  apiKey: 'AIzaSyC12sYYM-wuLwoTDtpTaA6pLJmU5kzrzIQ',
+})(App);
