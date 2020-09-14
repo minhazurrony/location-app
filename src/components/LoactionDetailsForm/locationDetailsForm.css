@@ -1,0 +1,43 @@
+.custom-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-item-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.form-item-container label {
+  font-weight: 500;
+  padding: 5px 0;
+}
+
+.form-item-container input[type='text'] {
+  padding: 5px;
+}
+
+.form-item-container input[type='text'],
+textarea {
+  border: none;
+  background: #e6e6ea;
+}
+
+.form-item-container input[type='text']:focus,
+textarea:focus {
+  outline: 0;
+}
+
+.form-item-container .submit-button {
+  margin-top: 5px;
+  padding: 5px;
+  border: none;
+  background: #98c9a3;
+}
+
+.form-item-container .submit-button:hover {
+  background: #77bfa3;
+  color: white;
+  transition: all 0.5s;
+}
