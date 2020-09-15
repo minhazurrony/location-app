@@ -1,5 +1,6 @@
 import { GoogleApiWrapper, InfoWindow, Map, Marker } from 'google-maps-react';
 import React, { Component } from 'react';
+import { LoactionDetailsForm } from './components/LoactionDetailsForm';
 
 const API_KEY = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
 
@@ -8,6 +9,7 @@ class App extends Component {
     activeMarker: {},
     selectedPlace: {},
     showingInfoWindow: false,
+    name: 'Minhazur Rahman',
   };
 
   locationDetails = {
@@ -37,8 +39,9 @@ class App extends Component {
   };
 
   render() {
-    if (!this.props.loaded) return <div>Loading...</div>;
+    const { selectedPlace, name } = this.state;
 
+    if (!this.props.loaded) return <div>Loading...</div>;
     return (
       <Map
         className="map"
@@ -61,7 +64,7 @@ class App extends Component {
           visible={this.state.showingInfoWindow}
         >
           <div>
-            <h2>Form will render here...</h2>
+            <LoactionDetailsForm myName={name} location={selectedPlace} />
           </div>
         </InfoWindow>
       </Map>
